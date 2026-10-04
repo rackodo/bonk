@@ -4,6 +4,8 @@
  * @version 2026.10.4
  */
 
+import { checkCookie, getCookie, setCookie } from "./cookieManagement.js";
+
 const hammer = document.getElementById("hammer"); // hammer
 const contact = document.getElementById("contact"); // point of contact for when the hammer is used
 const target = document.getElementById("target"); // what the hammer will be hitting
@@ -17,7 +19,8 @@ let hammerOffset = 0; // the hammer's position compared to the center of the scr
 
 let clicking = false; // are we clicking
 
-let score = 0; // number of times we've hit the target with the hammer
+let score = checkCookie("score") ? Number(getCookie("score")) : 0; // number of times we've hit the target with the hammer
+scoreText.innerHTML = score;
 
 /**
  * Clamps a value between two thresholds.
@@ -91,6 +94,18 @@ function calculateHammerAndContact() {
 
 requestAnimationFrame(calculateHammerAndContact);
 
+// Basic wall for mobile players, cos I don't wanna deal with adding mobile support yet
 document.getElementById("bypass-mobile").addEventListener("click", () => {
 	document.getElementById("mobile-barrier").remove()
 })
+
+// basic time tracking and saving every 30s
+let timePlayed = 0;
+
+setInterval(() => {
+	timePlayed += 1;
+	if (timePlayed % 30 === 0) {
+		setCookie("score", score)
+		console.log("Score saved at " + timePlayed + ": " + score)
+	}
+}, 1000)

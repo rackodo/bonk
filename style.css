@@ -71,6 +71,12 @@ body {
 	border-radius: 100%;
 	background-color: rgba(0,0,0,0.1);
 	border: 5px dashed rgba(0,0,0,0.25);
+
+	animation: rotatingContact linear 1s infinite;
+}
+
+@keyframes rotatingContact {
+	from { transform: translate(-50%, -50%) rotate(0deg) } to { transform: translate(-50%, -50%) rotate(30deg) }
 }
 
 /* Score! */
