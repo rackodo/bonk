@@ -4,13 +4,17 @@
  * @version 2026.10.4
  */
 
-import { checkCookie, getCookie, setCookie } from "./cookieManagement.js";
+import { checkCookie, clearAllCookies, getCookie, setCookie } from "./cookieManagement.js";
 import { clamp, isIntersecting } from "./utils.js";
 
 const hammer = document.getElementById("hammer"); // hammer
 const contact = document.getElementById("contact"); // point of contact for when the hammer is used
 const target = document.getElementById("target"); // what the hammer will be hitting
 const scoreText = document.getElementById("score"); // how many times have you successfully used the hammer?
+const resetButton = document.getElementById("reset-button"); // reset button
+const resetWarning = document.getElementById("reset-warning"); // reset warning
+
+let wantsToReset = false;
 
 let rot = 0; // hammer rotation
 let mouseX = 0; // mouse position (x)
@@ -22,6 +26,8 @@ let clicking = false; // are we clicking
 
 let score = checkCookie("score") ? Number(getCookie("score")) : 0; // number of times we've hit the target with the hammer
 scoreText.innerHTML = score;
+
+document.getElementById("last-save").innerHTML = "Last saved score: " + (checkCookie("score") ? getCookie("score") : "never")
 
 // calculate the hammer offset, clamped
 window.addEventListener('mousemove', (e) => {
@@ -39,6 +45,15 @@ window.addEventListener('mousedown', () => {
 	if (isIntersecting(contact, target)) {
 		score += 1
 		scoreText.innerHTML = score;
+	}
+
+	if (isIntersecting(contact, resetButton)) {
+		wantsToReset = wantsToReset ? false : true;
+	}
+
+	if (isIntersecting(contact, scoreText) && wantsToReset) {
+		clearAllCookies()
+		window.location.reload()
 	}
 })
 
@@ -64,6 +79,14 @@ function calculateHammerAndContact() {
 	
 	hammer.style.transform = `translate(-75px, -300px) rotate(${rot}deg)`;
 
+	if (wantsToReset) {
+		resetWarning.style.visibility = "visible";
+		scoreText.classList.add("primed")
+	} else {
+		resetWarning.style.visibility = "hidden";
+		scoreText.classList.remove("primed")
+	}
+
 	requestAnimationFrame(calculateHammerAndContact);
 }
 
@@ -77,10 +100,16 @@ document.getElementById("bypass-mobile").addEventListener("click", () => {
 // basic time tracking and saving every 30s
 let timePlayed = 0;
 
+const saveGame = () => {
+	setCookie("score", score)
+	setCookie("timeplayed", timePlayed)
+	console.log("Score saved at " + timePlayed + "seconds: " + score)
+	document.getElementById("last-save").innerHTML = "Last saved score: " + score
+}
+
 setInterval(() => {
 	timePlayed += 1;
 	if (timePlayed % 30 === 0) {
-		setCookie("score", score)
-		console.log("Score saved at " + timePlayed + ": " + score)
+		saveGame()
 	}
 }, 1000)

@@ -6,13 +6,24 @@ body {
 	margin: 0;
 }
 
+#last-save {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 50%;
+
+	transform: translate(-50%, 0);
+
+	user-select: none;
+}
+
 /* Hammer Container */
 #hammer {
 	display: block;
 	position: absolute;
 	width: 150px;
 	transform-origin: 75px 300px;
-	z-index: 5;
+	z-index: 10;
 	pointer-events: none;
 }
 
@@ -73,6 +84,22 @@ body {
 	border: 5px dashed rgba(0,0,0,0.25);
 
 	animation: rotatingContact linear 1s infinite;
+
+	z-index: 5;
+}
+
+#reset-button {
+	display: block;
+	position: fixed;
+	padding: 10px 10px;
+	bottom: 30px;
+	left: 50%;
+	transform: translate(-50%, 0);
+
+	background-color: #ff5555;
+	user-select: none;
+	font-weight: bold;
+	font-size: 20px;
 }
 
 @keyframes rotatingContact {
@@ -93,6 +120,29 @@ body {
 	transform: translate(-50%, 0);
 
 	user-select: none;
+}
+
+#score.primed {
+	color: red;
+	font-weight: bold;
+}
+
+#reset-warning {
+	display: block;
+	text-align: center;
+	position: fixed;
+	left: 50%;
+	top: 175px;
+	font-size: 24px;
+	margin: 0;
+
+	color: red;
+
+	transform: translate(-50%, 0);
+
+	user-select: none;
+
+	visibility: hidden;
 }
 
 #mobile-barrier {
