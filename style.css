@@ -1,0 +1,63 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+#hammer {
+	display: block;
+	position: absolute;
+	width: 150px;
+	transform-origin: 75px 300px;
+	z-index: 5;
+}
+
+#stone {
+	display: block;
+	background-color: blue;
+	position: relative;
+	width: 150px;
+	height: 100px;
+}
+
+#handle {
+	display: block;
+	background-color: red;
+	position: relative;
+	width: 10px;
+	height: 200px;
+	left: 70px;
+}
+
+#table {
+	display: block;
+	background-color: green;
+	position: fixed;
+	width: 400px;
+	height: 150px;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+#target {
+	display: block;
+	background-color: orange;
+	position: fixed;
+	width: 200px;
+	height: 200px;
+	bottom: 150px;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+#contact {
+	display: block;
+	background-color: purple;
+	position: fixed;
+	width: 100px;
+	height: 100px;
+	transform: translate(-50%, -50%);
+}
