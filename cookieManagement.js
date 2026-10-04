@@ -1,3 +1,14 @@
+/**
+ * @file Cookie management methods.
+ * @see https://www.w3schools.com/js/js_cookies.asp
+ */
+
+/**
+ * Creates/updates a browser cookie
+ * @param {string} cname - Cookie Key 
+ * @param {any} cvalue - Cookie Value
+ * @param {number} exdays - Cookie Expiration Date, defaults to 30 days
+ */
 export function setCookie(cname, cvalue, exdays = 30) {
 	const d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -5,6 +16,11 @@ export function setCookie(cname, cvalue, exdays = 30) {
 	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+/**
+ * Gets the value of a cookie.
+ * @param {string} cname - Cookie Key 
+ * @returns {string} Cookie Value
+ */
 export function getCookie(cname) {
 	let name = cname + "=";
 	let decodedCookie = decodeURIComponent(document.cookie);
@@ -21,6 +37,12 @@ export function getCookie(cname) {
 	return "";
 }
 
+/**
+ * Checks is a cookie has been set.
+ * @param {string} cname 
+ * @returns {boolean} true, if it has!
+ * @returns {boolean} false, if not.
+ */
 export function checkCookie(cname) {
 	if (getCookie(cname) != "") {
 		return true

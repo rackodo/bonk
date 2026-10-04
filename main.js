@@ -1,10 +1,11 @@
 /**
- * @file Making a silly kind of hammer bonking thing cos I'm incredibly bored.
+ * @file Main script file. Handles events and the like.
  * @author Bash Elliott <bashelliott@gmail.com>
  * @version 2026.10.4
  */
 
 import { checkCookie, getCookie, setCookie } from "./cookieManagement.js";
+import { clamp, isIntersecting } from "./utils.js";
 
 const hammer = document.getElementById("hammer"); // hammer
 const contact = document.getElementById("contact"); // point of contact for when the hammer is used
@@ -22,15 +23,6 @@ let clicking = false; // are we clicking
 let score = checkCookie("score") ? Number(getCookie("score")) : 0; // number of times we've hit the target with the hammer
 scoreText.innerHTML = score;
 
-/**
- * Clamps a value between two thresholds.
- * @param {number} num - number to clamp
- * @param {number} min - minimum possible value
- * @param {number} max - maximum possible value
- * @returns {number} clamped value
- */
-const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
-
 // calculate the hammer offset, clamped
 window.addEventListener('mousemove', (e) => {
 	mouseX = e.clientX;
@@ -40,29 +32,12 @@ window.addEventListener('mousemove', (e) => {
 	hammerOffset = clamp(rawHammerOffset * 5, -45, 45)
 });
 
-/**
- * Check if the contact point is intersecting with the target
- * @returns {boolean} true if the two boxes are intersecting
- * @returns {boolean} false if they aren't
- */
-const checkIfHit = () => {
-	const contactRect = contact.getBoundingClientRect();
-	const targetRect = target.getBoundingClientRect();
-
-	return !(
-		contactRect.right < targetRect.left ||
-		contactRect.left > targetRect.right ||
-		contactRect.bottom < targetRect.top ||
-		contactRect.top > targetRect.bottom
-	)
-}
-
 // bring down the hammer. if it's intersecting, increment the score
 window.addEventListener('mousedown', () => {
 	clicking = true
 
-	if (checkIfHit()) {
-		score += 1;
+	if (isIntersecting(contact, target)) {
+		score += 1
 		scoreText.innerHTML = score;
 	}
 })
