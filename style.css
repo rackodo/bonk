@@ -4,6 +4,7 @@
 
 body {
 	margin: 0;
+	overflow: hidden;
 }
 
 #last-save {
@@ -143,6 +144,30 @@ body {
 	user-select: none;
 
 	visibility: hidden;
+}
+
+#title {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	padding: 30px 20px;
+
+	user-select: none;
+}
+
+#title * {
+	margin: -15px 0px;
+	text-align: right;
+}
+
+#title h1 {
+	margin-right: -4px;
+	font-size: 72px;
+	font-weight: normal;
+}
+
+#title p {
+	font-size: 32px;
 }
 
 #mobile-barrier {
