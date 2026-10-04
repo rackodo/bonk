@@ -1,6 +1,7 @@
 const hammer = document.getElementById("hammer");
 const contact = document.getElementById("contact");
 const target = document.getElementById("target");
+const scoreText = document.getElementById("score");
 
 let rot = 0;
 let mouseX = 0;
@@ -9,6 +10,8 @@ let mouseY = 0;
 let hammerOffset = 0;
 
 let clicking = false;
+
+let score = 0;
 
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
@@ -35,7 +38,10 @@ const checkIfHit = () => {
 window.addEventListener('mousedown', () => {
 	clicking = true
 
-	console.log(checkIfHit())
+	if (checkIfHit()) {
+		score += 1;
+		scoreText.innerHTML = score;
+	}
 })
 
 window.addEventListener('mouseup', () => clicking = false)
@@ -46,7 +52,7 @@ function animate() {
 	hammer.style.top = mouseY + "px";
 	hammer.style.left = mouseX + "px";
 
-	let contactY = mouseY + 5;
+	let contactY = mouseY + 25;
 	let contactX = mouseX + (255 * Math.sign(-hammerOffset))
 
 	contact.style.top = contactY + "px"
