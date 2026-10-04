@@ -90,3 +90,7 @@ function calculateHammerAndContact() {
 }
 
 requestAnimationFrame(calculateHammerAndContact);
+
+document.getElementById("bypass-mobile").addEventListener("click", () => {
+	document.getElementById("mobile-barrier").remove()
+})
